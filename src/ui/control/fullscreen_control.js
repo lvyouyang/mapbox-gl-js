@@ -8,7 +8,7 @@ import window from '../../util/window';
 import type Map from '../map';
 
 /**
- * A `FullscreenControl` control contains a button for toggling the map in and out of fullscreen mode.
+ * FullscreenControl 控件包含一个控制地图进入、退出全屏模式的按钮。
  *
  * @implements {IControl}
  * @example
