@@ -23,14 +23,14 @@ type Options = {
 };
 
 /**
- * Creates a marker component
+ * 创建marker组件
  * @param {Object} [options]
- * @param {HTMLElement} [options.element] DOM element to use as a marker. The default is a light blue, droplet-shaped SVG marker.
- * @param {string} [options.anchor='center'] A string indicating the part of the Marker that should be positioned closest to the coordinate set via {@link Marker#setLngLat}.
- *   Options are `'center'`, `'top'`, `'bottom'`, `'left'`, `'right'`, `'top-left'`, `'top-right'`, `'bottom-left'`, and `'bottom-right'`.
- * @param {PointLike} [options.offset] The offset in pixels as a {@link PointLike} object to apply relative to the element's center. Negatives indicate left and up.
- * @param {string} [options.color='#3FB1CE'] The color to use for the default marker if options.element is not provided. The default is light blue.
- * @param {boolean} [options.draggable=false] A boolean indicating whether or not a marker is able to be dragged to a new position on the map.
+ * @param {HTMLElement} [options.element] 用作marker的DOM元素，默认是一个浅蓝色、液滴状的SVG marker。
+ * @param {string} [options.anchor='center'] 指定marker相对于定位坐标（由{@link Marker#setLngLat}设定）的位置。
+ *  选项有 `'center'`, `'top'`, `'bottom'`, `'left'`, `'right'`, `'top-left'`, `'top-right'`, `'bottom-left'`, 以及 `'bottom-right'`。
+ * @param {PointLike} [options.offset] 指定相对于元素中心的像素偏移量，是一个{@link PointLike}对象，负数表示左和上。
+ * @param {string} [options.color='#3FB1CE'] 在未指定options.element的情况下表示默认marker的颜色，默认为浅蓝色。
+ * @param {boolean} [options.draggable=false] 指定marker是否支持拖动。
  * @example
  * var marker = new mapboxgl.Marker()
  *   .setLngLat([30.5, 50.5])
@@ -185,7 +185,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * Attaches the marker to a map
+     * 添加marker到地图上
      * @param {Map} map
      * @returns {Marker} `this`
      */
@@ -207,7 +207,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * Removes the marker from a map
+     * 移除地图上的marker
      * @example
      * var marker = new mapboxgl.Marker().addTo(map);
      * marker.remove();
@@ -228,11 +228,10 @@ export default class Marker extends Evented {
     }
 
     /**
-     * Get the marker's geographical location.
+     * 获取marker的地理位置
      *
-     * The longitude of the result may differ by a multiple of 360 degrees from the longitude previously
-     * set by `setLngLat` because `Marker` wraps the anchor longitude across copies of the world to keep
-     * the marker on screen.
+     * 结果返回的经度可能与先前由`setLngLat`设置的经度相差360度的倍数，
+     * 因为 `Marker` 会包裹锚点经度以使标记保持在屏幕上。     
      *
      * @returns {LngLat}
      */
@@ -241,7 +240,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * Set the marker's geographical position and move it.
+     * 设置marker的地理位置
      * @returns {Marker} `this`
      */
     setLngLat(lnglat: LngLatLike) {
@@ -253,7 +252,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * Returns the `Marker`'s HTML element.
+     * 获取marker的HTML元素
      * @returns {HTMLElement} element
      */
     getElement() {
@@ -261,9 +260,9 @@ export default class Marker extends Evented {
     }
 
     /**
-     * Binds a Popup to the Marker
-     * @param popup an instance of the `Popup` class. If undefined or null, any popup
-     * set on this `Marker` instance is unset
+     * 给marker绑定弹窗
+     * @param popup 是`Popup`类的一个实例. 如果popup未定义或者为null, 那么任何
+     * 绑定到该marker的popup将被移除
      * @returns {Marker} `this`
      */
     setPopup(popup: ?Popup) {
@@ -305,7 +304,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * Returns the Popup instance that is bound to the Marker
+     * 获取绑定到marker上的popup实例
      * @returns {Popup} popup
      */
     getPopup() {
@@ -313,7 +312,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * Opens or closes the bound popup, depending on the current state
+     * 根据当前状态开启或关闭popup
      * @returns {Marker} `this`
      */
     togglePopup() {
@@ -346,7 +345,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * Get the marker's offset.
+     * 获取marker的offset
      * @returns {Point}
      */
     getOffset() {
@@ -354,8 +353,8 @@ export default class Marker extends Evented {
     }
 
     /**
-     * Sets the offset of the marker
-     * @param {PointLike} offset The offset in pixels as a {@link PointLike} object to apply relative to the element's center. Negatives indicate left and up.
+     * 设置marker的offset
+     * @param {PointLike} offset 是一个用于指定marker相对于元素中心的像素偏移量的{@link PointLike}对象，负数表示左和上。
      * @returns {Marker} `this`
      */
     setOffset(offset: PointLike) {
@@ -378,25 +377,25 @@ export default class Marker extends Evented {
             this._state = 'active';
 
             /**
-             * Fired when dragging starts
+             * 拖动开始时触发
              *
              * @event dragstart
              * @memberof Marker
              * @instance
              * @type {Object}
-             * @property {Marker} marker object that is being dragged
+             * @property {Marker} 被拖动的marker对象
              */
             this.fire(new Event('dragstart'));
         }
 
         /**
-         * Fired while dragging
+         * 拖动时候触发
          *
          * @event drag
          * @memberof Marker
          * @instance
          * @type {Object}
-         * @property {Marker} marker object that is being dragged
+         * @property {Marker} 被拖动的marker对象
          */
         this.fire(new Event('drag'));
     }
@@ -411,13 +410,13 @@ export default class Marker extends Evented {
         // only fire dragend if it was preceded by at least one drag event
         if (this._state === 'active') {
             /**
-            * Fired when the marker is finished being dragged
+            * 拖动结束时候触发
             *
             * @event dragend
             * @memberof Marker
             * @instance
             * @type {Object}
-            * @property {Marker} marker object that was dragged
+            * @property {Marker}被拖动的marker对象
             */
             this.fire(new Event('dragend'));
         }
@@ -446,8 +445,8 @@ export default class Marker extends Evented {
     }
 
     /**
-     * Sets the `draggable` property and functionality of the marker
-     * @param {boolean} [shouldBeDraggable=false] Turns drag functionality on/off
+     * 设置marker的`draggable`属性和功能
+     * @param {boolean} [shouldBeDraggable=false] 开启或关闭拖动功能
      * @returns {Marker} `this`
      */
     setDraggable(shouldBeDraggable: boolean) {
@@ -469,7 +468,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * Returns true if the marker can be dragged
+     * 如果marker是可拖动的，返回true
      * @returns {boolean}
      */
     isDraggable() {
