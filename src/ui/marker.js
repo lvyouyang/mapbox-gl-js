@@ -185,7 +185,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * 添加marker到地图上
+     * 添加marker到地图上。
      * @param {Map} map
      * @returns {Marker} `this`
      */
@@ -207,7 +207,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * 移除地图上的marker
+     * 移除地图上的marker。
      * @example
      * var marker = new mapboxgl.Marker().addTo(map);
      * marker.remove();
@@ -228,9 +228,9 @@ export default class Marker extends Evented {
     }
 
     /**
-     * 获取marker的地理位置
+     * 获取marker的地理位置。
      *
-     * 结果返回的经度可能与先前由`setLngLat`设置的经度相差360度的倍数，
+     * 结果返回的经度可能与先前由 `setLngLat` 设置的经度相差360度的倍数，
      * 因为 `Marker` 会包裹锚点经度以使标记保持在屏幕上。     
      *
      * @returns {LngLat}
@@ -240,7 +240,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * 设置marker的地理位置
+     * 设置marker的地理位置。
      * @returns {Marker} `this`
      */
     setLngLat(lnglat: LngLatLike) {
@@ -260,8 +260,8 @@ export default class Marker extends Evented {
     }
 
     /**
-     * 给marker绑定弹窗
-     * @param popup 是`Popup`类的一个实例. 如果popup未定义或者为null, 那么任何
+     * 给marker绑定弹窗。
+     * @param popup 是 `Popup` 类的一个实例. 如果popup未定义或者为null, 那么任何
      * 绑定到该marker的popup将被移除
      * @returns {Marker} `this`
      */
@@ -304,7 +304,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * 获取绑定到marker上的popup实例
+     * 获取绑定到marker上的popup实例。
      * @returns {Popup} popup
      */
     getPopup() {
@@ -312,7 +312,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * 根据当前状态开启或关闭popup
+     * 根据当前状态开启或关闭弹窗。
      * @returns {Marker} `this`
      */
     togglePopup() {
@@ -345,7 +345,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * 获取marker的offset
+     * 获取marker的偏移量（offset）。
      * @returns {Point}
      */
     getOffset() {
@@ -353,7 +353,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * 设置marker的offset
+     * 设置marker的偏移量（offset）。
      * @param {PointLike} offset 是一个用于指定marker相对于元素中心的像素偏移量的{@link PointLike}对象，负数表示左和上。
      * @returns {Marker} `this`
      */
@@ -377,7 +377,7 @@ export default class Marker extends Evented {
             this._state = 'active';
 
             /**
-             * 拖动开始时触发
+             * 拖动开始时触发。
              *
              * @event dragstart
              * @memberof Marker
@@ -389,7 +389,7 @@ export default class Marker extends Evented {
         }
 
         /**
-         * 拖动时候触发
+         * 拖动时候触发。
          *
          * @event drag
          * @memberof Marker
@@ -410,7 +410,7 @@ export default class Marker extends Evented {
         // only fire dragend if it was preceded by at least one drag event
         if (this._state === 'active') {
             /**
-            * 拖动结束时候触发
+            * 拖动结束时候触发。
             *
             * @event dragend
             * @memberof Marker
@@ -445,7 +445,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * 设置marker的`draggable`属性和功能
+     * 设置marker的 `draggable` 属性和功能。
      * @param {boolean} [shouldBeDraggable=false] 开启或关闭拖动功能
      * @returns {Marker} `this`
      */
@@ -468,7 +468,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * 如果marker是可拖动的，返回true
+     * 如果marker是可拖动的，返回true。
      * @returns {boolean}
      */
     isDraggable() {
