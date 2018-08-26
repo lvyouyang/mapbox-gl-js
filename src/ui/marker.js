@@ -252,7 +252,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * 获取marker的HTML元素
+     * 获取marker的HTML元素。
      * @returns {HTMLElement} element
      */
     getElement() {
@@ -260,7 +260,7 @@ export default class Marker extends Evented {
     }
 
     /**
-     * 给marker绑定弹窗。
+     * 给marker绑定弹窗
      * @param popup 是 `Popup` 类的一个实例. 如果popup未定义或者为null, 那么任何
      * 绑定到该marker的popup将被移除
      * @returns {Marker} `this`
