@@ -10,7 +10,7 @@ import { Event } from '../../util/evented';
 import type Map from '../map';
 
 /**
- * BoxZoomHandler 让用户能够将地图缩放到适合限位框的大小.
+ * BoxZoomHandler 让用户能够将地图缩放到适合限位框的大小。
  * 拖动光标时点击并按 shift 即可定义限位框。
  */
 class BoxZoomHandler {
