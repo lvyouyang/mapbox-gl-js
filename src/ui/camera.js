@@ -23,17 +23,16 @@ import type {TaskID} from '../util/task_queue';
 import type {PointLike} from '@mapbox/point-geometry';
 
 /**
- * Options common to {@link Map#jumpTo}, {@link Map#easeTo}, and {@link Map#flyTo}, controlling the desired location,
- * zoom, bearing, and pitch of the camera. All properties are optional, and when a property is omitted, the current
- * camera value for that property will remain unchanged.
+ * 类似于{@link Map＃jumpTo}，{@link Map＃easeTo}和{@link Map＃flyTo}这样的选项，可以用来控制位置，相机的变焦，方位等。所有属性都是可选的，当省略属性时，当前属性
+ * 该属性的相机值将保持不变。
  *
  * @typedef {Object} CameraOptions
- * @property {LngLatLike} center The desired center.
- * @property {number} zoom The desired zoom level.
- * @property {number} bearing The desired bearing, in degrees. The bearing is the compass direction that
- * is "up"; for example, a bearing of 90° orients the map so that east is up.
- * @property {number} pitch The desired pitch, in degrees.
- * @property {LngLatLike} around If `zoom` is specified, `around` determines the point around which the zoom is centered.
+ * @property {LngLatLike}center 所需的中心。
+ * @property {number} zoom 所需的缩放级别。
+ * @property {number} bearing 所需的方位，以度为单位。方位是罗盘方向是“向上”；例如，90°的方位使地图定向，以便东向上。
+ * @property {number} bearing 所需的方位，以度为单位。方位是罗盘方向。
+ * @property {number} pitch 所需的轴向角，以度为单位。
+ * @property {LngLatLike} around 如果指定`zoom`，`around`确定缩放居中的点。
  */
 export type CameraOptions = {
     center?: LngLatLike,
@@ -44,9 +43,6 @@ export type CameraOptions = {
 };
 
 /**
- * Options common to map movement methods that involve animation, such as {@link Map#panBy} and
- * {@link Map#easeTo}, controlling the duration and easing function of the animation. All properties
- * are optional.
  *
  * @typedef {Object} AnimationOptions
  * @property {number} duration The animation's duration, measured in milliseconds.
@@ -54,6 +50,13 @@ export type CameraOptions = {
  *   the initial state and 1 is the final state.
  * @property {PointLike} offset of the target center relative to real map container center at the end of animation.
  * @property {boolean} animate If `false`, no animation will occur.
+ * 包含动画的、涉及地图移动的共同选项，例如{@link Map＃panBy}和{@link Map＃easeTo}，控制动画的持续时间和缓动功能。所有属性是可选的。
+ *
+ * @typedef {Object} AnimationOptions
+ * @property {number} duration 动画的持续时间，以毫秒为单位。
+ * @property {Function} easing 在0..1范围内的时间函数，返回一个数字，初始状态为0，终止状态为1。
+ * @property {PointLike} 在动画结束时相对于真实地图容器中心的目标中心偏移量。
+ * @property {boolean} animate 如果是`false`，则不会出现动画。
  */
 export type AnimationOptions = {
     duration?: number,
@@ -63,14 +66,13 @@ export type AnimationOptions = {
 };
 
 /**
- * Options for setting padding on a call to {@link Map#fitBounds}. All properties of this object must be
- * non-negative integers.
+ * 调用{@link Map＃fitBounds}时设置填充的选项。该对象的所有属性必须是非负整数。
  *
  * @typedef {Object} PaddingOptions
- * @property {number} top Padding in pixels from the top of the map canvas.
- * @property {number} bottom Padding in pixels from the bottom of the map canvas.
- * @property {number} left Padding in pixels from the left of the map canvas.
- * @property {number} right Padding in pixels from the right of the map canvas.
+ * @property {number} top 从地图画布顶部填充像素。
+ * @property {number} bottom 从地图画布底部填充像素。
+ * @property {number} left 从地图画布的左侧填充像素。
+ * @property {number} right 从地图画布右侧填充像素。
  */
 
 class Camera extends Evented {
@@ -103,40 +105,40 @@ class Camera extends Evented {
     }
 
     /**
-     * Returns the map's geographical centerpoint.
+     * 返回地图的地理中心点。
      *
      * @memberof Map#
-     * @returns The map's geographical centerpoint.
+     * @returns 地图的地理中心点。
      */
     getCenter(): LngLat { return this.transform.center; }
 
     /**
-     * Sets the map's geographical centerpoint. Equivalent to `jumpTo({center: center})`.
+     * 设置地图的地理中心点。相当于`jumpTo（{center：center}）`。
      *
-     * @memberof Map#
-     * @param center The centerpoint to set.
-     * @param eventData Additional properties to be added to event objects of events triggered by this method.
+     * @memberof Map＃
+     * @param center 要设置的中心点。
+     * @param eventData 要添加到此方法触发的事件的事件对象的其他属性。
      * @fires movestart
      * @fires moveend
-     * @returns {Map} `this`
+     * @returns {Map}`this`
      * @example
-     * map.setCenter([-74, 38]);
+     * map.setCenter（[ -  74,38]）;
      */
     setCenter(center: LngLatLike, eventData?: Object) {
         return this.jumpTo({center: center}, eventData);
     }
 
     /**
-     * Pans the map by the specified offest.
+     * 按照指定的地图平移地图。
      *
-     * @memberof Map#
-     * @param offset `x` and `y` coordinates by which to pan the map.
+     * @memberof Map＃
+     * @param offset `x`和`y`坐标用于平移地图。
      * @param options
-     * @param eventData Additional properties to be added to event objects of events triggered by this method.
+     * @param eventData 要添加到此方法触发的事件的事件对象的其他属性。
      * @fires movestart
      * @fires moveend
-     * @returns {Map} `this`
-     * @see [Navigate the map with game-like controls](https://www.mapbox.com/mapbox-gl-js/example/game-controls/)
+     * @returns {Map}`this`
+     * @see [Navigate the map with game-like controls]（https://www.mapbox.com/mapbox-gl-js/example/game-controls/）
      */
     panBy(offset: PointLike, options?: AnimationOptions, eventData?: Object) {
         offset = Point.convert(offset).mult(-1);
@@ -144,15 +146,15 @@ class Camera extends Evented {
     }
 
     /**
-     * Pans the map to the specified location, with an animated transition.
+     * 使用动画过渡将地图平移到指定位置。
      *
-     * @memberof Map#
-     * @param lnglat The location to pan the map to.
-     * @param options
-     * @param eventData Additional properties to be added to event objects of events triggered by this method.
+     * @memberof Map＃
+     * @param lnglat 将地图平移到的位置。
+     * @param选项
+     * @param eventData 要添加到此方法触发的事件的事件对象的其他属性。
      * @fires movestart
      * @fires moveend
-     * @returns {Map} `this`
+     * @returns {Map}`this`
      */
     panTo(lnglat: LngLatLike, options?: AnimationOptions, eventData?: Object) {
         return this.easeTo(extend({
@@ -161,19 +163,19 @@ class Camera extends Evented {
     }
 
     /**
-     * Returns the map's current zoom level.
+     * 返回地图当前的缩放等级。
      *
      * @memberof Map#
-     * @returns The map's current zoom level.
+     * @returns 地图目前的缩放等级。
      */
     getZoom(): number { return this.transform.zoom; }
 
     /**
-     * Sets the map's zoom level. Equivalent to `jumpTo({zoom: zoom})`.
+     * 设置地图的缩放等级。相当于`jumpTo({zoom: zoom})`。
      *
      * @memberof Map#
-     * @param zoom The zoom level to set (0-20).
-     * @param eventData Additional properties to be added to event objects of events triggered by this method.
+     * @param zoom (0-20)的缩放等级.
+     * @param eventData 要添加到此方法触发的事件的事件对象的其他属性。
      * @fires movestart
      * @fires zoomstart
      * @fires move
@@ -182,7 +184,7 @@ class Camera extends Evented {
      * @fires zoomend
      * @returns {Map} `this`
      * @example
-     * // zoom the map to 5
+     * // 缩放地图到等级
      * map.setZoom(5);
      */
     setZoom(zoom: number, eventData?: Object) {
@@ -191,12 +193,12 @@ class Camera extends Evented {
     }
 
     /**
-     * Zooms the map to the specified zoom level, with an animated transition.
+     * 使用动画过渡将地图缩放到指定的缩放级别。
      *
      * @memberof Map#
-     * @param zoom The zoom level to transition to.
+     * @param zoom 要转换到的缩放级别。
      * @param options
-     * @param eventData Additional properties to be added to event objects of events triggered by this method.
+     * @param eventData 要添加到此方法触发的事件的事件对象的其他属性。
      * @fires movestart
      * @fires zoomstart
      * @fires move
@@ -212,11 +214,11 @@ class Camera extends Evented {
     }
 
     /**
-     * Increases the map's zoom level by 1.
+     * 增加一个等级的地图缩放程度
      *
      * @memberof Map#
      * @param options
-     * @param eventData Additional properties to be added to event objects of events triggered by this method.
+     * @param eventData A要添加到此方法触发的事件的事件对象的其他属性。
      * @fires movestart
      * @fires zoomstart
      * @fires move
@@ -231,11 +233,11 @@ class Camera extends Evented {
     }
 
     /**
-     * Decreases the map's zoom level by 1.
+     * 减少地图的一个缩放等级。
      *
      * @memberof Map#
      * @param options
-     * @param eventData Additional properties to be added to event objects of events triggered by this method.
+     * @param eventData 要添加到此方法触发的事件的事件对象的其他属性。
      * @fires movestart
      * @fires zoomstart
      * @fires move
@@ -250,30 +252,28 @@ class Camera extends Evented {
     }
 
     /**
-     * Returns the map's current bearing. The bearing is the compass direction that is \"up\"; for example, a bearing
-     * of 90° orients the map so that east is up.
+     *返回地图的当前方位。轴承是罗盘方向“向上”；例如，一个轴向90°定位地图以使东向上。
      *
-     * @memberof Map#
-     * @returns The map's current bearing.
-     * @see [Navigate the map with game-like controls](https://www.mapbox.com/mapbox-gl-js/example/game-controls/)
+     * @memberof Map＃
+     * @returns 地图的当前方位。
+     * @see [Navigate the map with game-like controls]（https://www.mapbox.com/mapbox-gl-js/example/game-controls/）
      */
     getBearing(): number { return this.transform.bearing; }
 
     /**
-     * Sets the map's bearing (rotation). The bearing is the compass direction that is \"up\"; for example, a bearing
-     * of 90° orients the map so that east is up.
+     * 设置地图的方位（旋转）。轴承是罗盘方向“向上”；例如，一个轴向90°定位地图以使东向上。
      *
-     * Equivalent to `jumpTo({bearing: bearing})`.
+     * 相当于`jumpTo（{bearing：bearing}）`。
      *
-     * @memberof Map#
-     * @param bearing The desired bearing.
-     * @param eventData Additional properties to be added to event objects of events triggered by this method.
+     * @memberof Map＃
+     * @param bearing 所需的轴向角。
+     * @param eventData 要添加到此方法触发的事件的事件对象的其他属性。
      * @fires movestart
      * @fires moveend
-     * @returns {Map} `this`
+     * @returns {Map}`this`
      * @example
-     * // rotate the map to 90 degrees
-     * map.setBearing(90);
+     * //将地图旋转到90度
+     * map.setBearing（90）;
      */
     setBearing(bearing: number, eventData?: Object) {
         this.jumpTo({bearing: bearing}, eventData);
@@ -281,16 +281,15 @@ class Camera extends Evented {
     }
 
     /**
-     * Rotates the map to the specified bearing, with an animated transition. The bearing is the compass direction
-     * that is \"up\"; for example, a bearing of 90° orients the map so that east is up.
+     * 使用动画过渡将地图旋转到指定的方位。轴向角是罗盘方向即“向上”；例如，90°的方位使地图定向，以便东向上。
      *
-     * @memberof Map#
-     * @param bearing The desired bearing.
+     * @memberof Map＃
+     * @param bearing 所需的轴向角。
      * @param options
-     * @param eventData Additional properties to be added to event objects of events triggered by this method.
+     * @param eventData 要添加到此方法触发的事件的事件对象的其他属性。
      * @fires movestart
      * @fires moveend
-     * @returns {Map} `this`
+     * @returns {Map}`this`
      */
     rotateTo(bearing: number, options?: AnimationOptions, eventData?: Object) {
         return this.easeTo(extend({
@@ -299,30 +298,29 @@ class Camera extends Evented {
     }
 
     /**
-     * Rotates the map so that north is up (0° bearing), with an animated transition.
+     * 旋转地图以使北向上（0°方位），并带有动画过渡。
      *
-     * @memberof Map#
+     * @memberof Map＃
      * @param options
-     * @param eventData Additional properties to be added to event objects of events triggered by this method.
+     * @param eventData 要添加到此方法触发的事件的事件对象的其他属性。
      * @fires movestart
      * @fires moveend
-     * @returns {Map} `this`
+     * @returns {Map}`this`
      */
     resetNorth(options?: AnimationOptions, eventData?: Object) {
         this.rotateTo(0, extend({duration: 1000}, options), eventData);
         return this;
     }
 
-    /**
-     * Snaps the map so that north is up (0° bearing), if the current bearing is close enough to it (i.e. within the
-     * `bearingSnap` threshold).
+    /**     
+     * 如果当前轴向角足够接近（在bearingSnap` 的阈值），则将地图捕捉到北向上（0°方位）
      *
-     * @memberof Map#
+     * @memberof Map＃
      * @param options
-     * @param eventData Additional properties to be added to event objects of events triggered by this method.
+     * @param eventData 要添加到此方法触发的事件的事件对象的其他属性。
      * @fires movestart
      * @fires moveend
-     * @returns {Map} `this`
+     * @returns {Map}`this`
      */
     snapToNorth(options?: AnimationOptions, eventData?: Object) {
         if (Math.abs(this.getBearing()) < this._bearingSnap) {
